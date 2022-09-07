@@ -9,22 +9,23 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+### My Git settings:
+user.name=YingL1231
+user.email=liuying991231@163.com
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### My Git remote settings:
+origin  https://github.com/YingL1231/EDA-Fall2022 (fetch)
+origin  https://github.com/YingL1231/EDA-Fall2022 (push)
+upstream        https://github.com/ENV872/EDA-Fall2022 (fetch)
+upstream        DISABLE (push)
+### My Git changes:
+00974b9 (HEAD -> main, origin/main, origin/HEAD) ass01_step1
+20b1cbd fix merge
+f760af8 edit form local machine
+f411630 change using web
+05dc5ea radnom text
+9c281f5 add new gitdemo file
+2342d5a Create 02_Reproducibility_CodingBasics.Rmd
+d74b397 Adds 01_gitExercise.pdf
+20a7b70 Add data files
+f992081 Create Assignments folder
