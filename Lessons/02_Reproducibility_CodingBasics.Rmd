@@ -21,7 +21,7 @@ output: pdf_document
 -   Raw data are always separate from processed data
 -   Link data transformations with a reproducible pipeline
 -   Raw datasets NEVER changed
--   Cleaning/transformations done through coding, not by editing within Excel
+-   **Cleaning/transformations done through coding, not by editing within Excel** best do now than later
 -   Edits documented by well-commented code
 -   Majority of time spent in the data processing phase (clean, wrangle)
 
@@ -31,7 +31,7 @@ output: pdf_document
 -   File names in ASCII text
 -   No spaces!
 -   Consistent file naming conventions
--   Store data, code, and output in separate folders
+-   **Store data, code, and output in separate folders**
 
 ### Version Control
 
@@ -79,6 +79,7 @@ Below is a chunk of R code. You can run R code in several ways:
 1 / 2
 1 / 200 * 30
 5 + 2 * 3
+
 (5 + 2) * 3
 
 # Common terms
@@ -116,8 +117,7 @@ x
 
 ### Naming
 
-R objects can be named with a combination of letters, numbers, underscore (`_`) and period (`.`). The best R object names are *informative*. Resist the temptation to call your R object something convenient, like "a", "b", and so on. Calling your R object something specific means that you can call up that object later and have an idea of what it contains, with less need for specific context.
-
+R objects can be named with a combination of letters, numbers, underscore (`_`) and period (`.`). The best R object names are *informative*. Resist the temptation to call your R object something convenient, like "a", "b", and so on. Calling your R object something specific means that you can call up that object later and have an idea of what it contains, with less need for specific context
 Informative names are the first illustration of a common data management recommendation: take the time to use best management practices at the outset, and it will save you time in the long term.
 
 Importantly, you may never call an R object "data". This word is reserved for a specific function and may not be assigned as a name. To work around this, many people call their R objects "dat", which is another example of a less-than-ideal data management practice because it is not informative.
@@ -128,6 +128,7 @@ What happens if there is a typo in your code? Type the following in the R window
 
 ```{r}
 long_name_for_illustration <- 11
+long_name_for_illustration
 
 ```
 
