@@ -77,7 +77,7 @@ df
 
 #Or Option 2 - transform into a data frame before binding
 df_car_dist <- as.data.frame(car_dist)  #op2
-df_opt2 <- cbind(df_car_speed,df_car_dist)
+df_opt2 <- cbind(df_car_speed,df_car_dist)#cbind: column bind
 class(df_opt2)
 df_opt2
 
@@ -109,7 +109,7 @@ Some useful functions to use with data frames.
 ncol(df)  
 nrow(df)  
 length(df)  #same as ncol
-summary(df)
+summary(df) #summary data: mean, max, min, median, 3rd quartil etc.
 head(df) #show the first 6 rows of df
 
 #If you know the number of the column you want you can refer to that to access column

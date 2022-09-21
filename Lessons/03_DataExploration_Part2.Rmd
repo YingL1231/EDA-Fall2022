@@ -61,8 +61,6 @@ Visualize count data for categorical variables.
 ggplot(USGS.flow.data, aes(x = discharge.mean.approval)) +
   geom_bar()
 
-
-
 ```
 
 ### Histogram (function: geom_histogram)

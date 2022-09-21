@@ -21,7 +21,18 @@ R treats objects differently based on their characteristics. For more informatio
 
 -   **Vectors** 1 dimensional structure that contains elements of the same type.
 
+```{r}
+vector1<-c(1,2,4,5)
+vector1
+vector1[3]
+```
+
 -   **Matrices** 2 dimensional structure that contains elements of the same type.
+```{r}
+matrix1<-matrix(1:20,nrow=4,ncol=5)
+matrix1
+
+```
 
 -   **Arrays** Similar to matrices, but can have more than 2 dimensions. We will not delve into arrays in depth.
 
@@ -30,6 +41,27 @@ R treats objects differently based on their characteristics. For more informatio
 -   **Data Frames** 2 dimensional structure that is more general than a matrix. Columns can have different modes (e.g., numeric and factor). When we import csv files into the R workspace, they will enter as data frames.
 
 Define what each new piece of syntax does below (i.e., fill in blank comments). Note that the R chunk has been divided into sections (\# at beginning of line, ---- at end)
+```{r}
+vector1<-c(93,93,73,78,85,82,78,75,73,71)
+vector2<-c(65,53,48,59,61,54,51,51,52,55)
+tocelsius<-function(Fahren,Celsius){
+  Celsius=(Fahren-32)*5/9
+  return(Celsius)
+}
+vector3<-tocelsius(vector1)
+vector4<-tocelsius(vector2)
+vector3
+vector4
+```
+```{r}
+d<-vector1
+e<-vector2
+f<-vector3
+g<-vector4
+temp<-data.frame(d,e,f,g)
+names(temp) <- c("highF","lowF","highC","lowC"); View(temp)
+
+```
 
 ```{r Create various data structures}
 # Vectors ----
@@ -53,8 +85,8 @@ matrix3 <- matrix(1:20, nrow = 5, ncol = 4, byrow = TRUE, # return after comma c
 
 matrix1[4, ] #
 matrix1[ , 3] #
-matrix1[c(12, 14)] #
-matrix1[c(12:14)] #
+matrix1[c(12, 14)] #go through by rows and find 12 and 14
+matrix1[c(12:14)] #go through by rows and find 12 13 14
 matrix1[2:4, 1:3] #
 
 cells <- c(1, 26, 24, 68)
@@ -64,20 +96,21 @@ matrix4 <- matrix(cells, nrow = 2, ncol = 2, byrow = TRUE,
   dimnames = list(rnames, cnames)) # 
 matrix4
 
-# Lists ---- 
-list1 <- list(name = "Maria", mynumbers = vector1, mymatrix = matrix1, age = 5.3); list1
-list1[[2]]
+# Lists ---- combination of different data
+list1 <- list(name = "Maria", mynumbers = vector1, mymatrix = matrix1, age = 5.3);
+list1
+list1[[2]]#print the second item in the list, in this case "mynumbers"
 
 # Data Frames ----
 d <- c(1, 2, 3, 4) # What type of vector?
 e <- c("red", "white", "red", NA) # What type of vector?
 f <- c(TRUE, TRUE, TRUE, FALSE) # What type of vector?
 dataframe1 <- data.frame(d,e,f) #
-names(dataframe1) <- c("ID","Color","Passed"); View(dataframe1) # 
+names(dataframe1) <- c("ID","Color","Passed"); View(dataframe1) #name rows and colums 
 
 dataframe1[1:2,] # 
 dataframe1[c("ID","Passed")] # 
-dataframe1$ID
+dataframe1$ID# $ gives the list of colum
 
 ```
 
@@ -128,9 +161,8 @@ Remember formatting of dates in R:
 # (code must be uncommented)
 today <- Sys.Date()
 format(today, format = "%B")
-#format(today, format = "")
-#format(today, format = "")
-#format(today, format = "")
+format(today, format = "%b")
+format(today, format = "%Y")
 
 ```
 
@@ -141,7 +173,7 @@ Install and load the package lubridate into your R session. Lubridate offers fas
 More info on lubridate [here][<https://cran.r-project.org/web/packages/lubridate/lubridate.pdf>].
 
 ```{r DateExercise1}
-#install.packages("lubridate")
+install.packages("lubridate")
 library(lubridate)
 
 #Ex1
@@ -158,9 +190,9 @@ date_obj_today
 
 #Ex_3 - on your own...
 str_juneteenth <- "19 June 1865"
-#Since the format is month-day-year we will use function mdy()
-#date_juneteenth <- ()
-#date_juneteenth
+#Since the format is month-day-year we will use function dmy()
+date_juneteenth <- dmy(str_juneteenth)
+date_juneteenth
 ```
 
 ```{r DateExercise2}
