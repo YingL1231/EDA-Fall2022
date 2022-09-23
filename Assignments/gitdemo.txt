@@ -1,7 +1,3 @@
 its a beautiful world and we have nothing to do
 wow what a beautiful world
-<<<<<<< HEAD
 this is an edit from local machine
-=======
-shoot
->>>>>>> f41163072ed09da0eac53101e1f4956427f5e5ba
