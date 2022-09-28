@@ -48,7 +48,9 @@ Data wrangling extends data exploration: it allows you to process data in ways t
 2. Each observation has its own row
 3. Each value has its own cell
 
-What is the best way to wrangle data? There are multiple ways to arrive at a specific outcome in R, and we will illustrate some of those approaches. Your goal should be to write the simplest code that will get you to your desired outcome. However, there is sometimes a trade-off of the opportunity cost to learn a new formulation of code and the time it takes to write complex code that you already know. Remember that the best code is one that is easy to understand for yourself and your collaborators. Remember to comment your code, use informative names for variables and functions, and use reproducible methods to arrive at your output.
+What is the best way to wrangle data? There are multiple ways to arrive at a specific outcome in R, and we will illustrate some of those approaches. Your goal should be to write the 'simplest code' that will get you to your desired outcome. However, there is sometimes a trade-off of the opportunity cost to learn a new formulation of code and the time it takes to write complex code that you already know. 
+Remember that the best code is one that is easy to understand for yourself and your collaborators. 
+Remember to comment your code, use informative names for variables and functions, and use reproducible methods to arrive at your output.
 
 ## Dplyr Wrangling Functions
 
@@ -111,6 +113,7 @@ NTL.phys.data.JunethruOctober4 <- filter(NTL.phys.data, daynum %in% c(152:304))
 # filter NTL.phys.data for the year 1999
 # what code do you need to use, based on the class of the variable?
 class(NTL.phys.data$year4)
+NTL.phys.data.Year1999<-filter(NTL.phys.data, year4==1999)
 
 # Exercise: 
 # filter NTL.phys.data for Tuesday Lake from 1990 through 1999.
@@ -119,7 +122,7 @@ class(NTL.phys.data$year4)
 ```
 Question: Why don't we filter using row numbers?
 
-> Answer: 
+> Answer: too many rows
 
 ### Arrange
 
