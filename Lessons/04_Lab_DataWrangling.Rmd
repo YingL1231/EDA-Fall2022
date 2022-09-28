@@ -19,7 +19,7 @@ editor_options:
 #This code chunk will tidy your knit PDF files, wrapping long code lines
 #For it to work, the "formatR" package needs to be installed
 
-#install.packages('formatR')
+install.packages('formatR')
 knitr::opts_chunk$set(tidy.opts=list(width.cutoff=80), tidy=TRUE)
 ```
 
@@ -31,9 +31,9 @@ Opening discussion: why might we be interested in long-term observations of temp
 
 ```{r, message = FALSE}
 getwd()
-#install.packages(tidyverse)
+install.packages(tidyverse)
 library(tidyverse)
-#install.packages(lubridate)
+install.packages(lubridate)
 library(lubridate)
 NTL.phys.data <- read.csv("./Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv", stringsAsFactors = TRUE)
 
@@ -65,12 +65,12 @@ NTL.phys.data.JunethruOctober <- filter(NTL.phys.data, daynum %in% c(152:304))
 # Exercise 1: 
 # filter NTL.phys.data for the year 1999
 # what code do you need to use, based on the class of the variable?
-
+NTL.phys.data.1999 <- filter(NTL.phys.data, year4==1999)
 
 # Exercise 2: 
 # filter NTL.phys.data for Tuesday Lake from 1990 through 1999.
 
-
+NTL.phys.data.Tuesday1990to1999<-filter(NTL.phys.data,lakename=="Tuesdat Lake"& year4<=1999&year4>=1990)
 ```
 Question: Why don't we filter using row numbers?
 
@@ -90,13 +90,19 @@ NTL.phys.data.processed <-
   mutate(temperature_F = (temperature_C*9/5) + 32)
 
 #Exercise 3: Using a pipe filter NTL.phys.data for Tuesday Lake from 1990 through 1999 only for July 
-
-
-
-
-
+NTL.phys.data.EX3 <- 
+  NTL.phys.data %>%
+  filter(lakename == "Tuesday Lake") %>%
+  filter(year4<=1999&year4>=1990) %>%
+  separate(sampledate, into = c('year', 'month', 'day'))%>%
+  #filter(month(sampeldate)==7)
+  filter(month=="07")
 #Exercise 4: Using the data from part 3, a pipe and the summarise() function find the mean surface temperature (hints: you will need to add another filter for depth==0). Make sure you eliminate NAs before computing the means
-
+ex4<-
+NTL.phys.data.EX3%>%
+  filter(depth==0)%>%
+  drop_na(temperature_C)%>%
+  summarise(meantemp=mean(temperature_C))
   
 ```
 
@@ -106,9 +112,15 @@ For gather we will use `pivot_longer` and for spread we will use `pivot_wider`.
 
 ```{r}
 #Exercise 5: gather irradiance data (measured in the water column and measured on the deck of the sampling boat) into one column using pivot_longer
-
-
+ex5<-
+  NTL.phys.data%>%
+  pivot_longer(irradianceWater:irradianceDeck,
+               names_to = "irradiance",
+               values_to="radiation")
 #Exercise 6: spread temperatureC into more than one column based on the depth
+ex6<-
+  NTL.phys.data%>%
+  pivot_wider(names_from = "depth",values_from="temperature_C")
 
 ```
 
