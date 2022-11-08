@@ -107,19 +107,20 @@ EPAair <- read.csv("./Data/Processed/EPAair_O3_PM25_NC2021_Processed.csv", strin
 EPAair.sites <- EPAair %>% 
   group_by(Site.Name, COUNTY, SITE_LATITUDE, SITE_LONGITUDE) %>% 
   summarize(
-    mean_Ozone = mean(Ozone, na.rm=T),    #What does "na.rm=T" do? Is it necessary?
+    mean_Ozone = mean(Ozone, na.rm=T),    
     mean_PM25 = mean(PM2.5, na.rm=T),
     count_all = n(),
     count_Ozone = sum(!is.na(Ozone)),
     count_PM25 = sum(!is.na(PM2.5)))
+#What does "na.rm=T" do? Is it necessary?
 
-#Convert to a spatial dataframe
+#Convert longitute and latitude columns into a spatial dataframe
 EPAair.sf <- EPAair.sites %>% 
   st_as_sf(coords = c('SITE_LONGITUDE','SITE_LATITUDE'),
            crs=4326)
 
 #View the data using the methods above...
-
+mapview(EPAair.sf)
 ```
 
 ### EXERCISE: Creating a spatial dataframe from known coordinates
@@ -129,9 +130,10 @@ EPAair.sf <- EPAair.sites %>%
 sfg_GraingerHall <- st_point(c(-78.9427,36.00465))
 class(sfg_GraingerHall)
 mapview(sfg_GraingerHall)
+# only a dot, wanna know where it is in the world?
 
 #Upgrade to a simple feature geometry column by adding a crs 
-sfc_GraingerHall <- st_sfc(sfg_GraingerHall,crs=4326)
+sfc_GraingerHall <- st_sfc(sfg_GraingerHall,crs=4326)#add crs system 
 class(sfc_GraingerHall)
 mapview(sfc_GraingerHall)
 
