@@ -6,7 +6,7 @@ output:
   html_document:
     df_print: paged
 editor_options:
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 # 1. INTRODUCTION
@@ -61,7 +61,7 @@ First, we'll read in our EPA air quality sites, as we did in the previous exerci
 
 ```{r convert.tabular.data.to.sf.object}
 #Read our EPA points into a spatial dataframe
-epa_pm25_sites_sf <- read_csv('./Data/Raw/EPAair_PM25_NC2018_raw.csv') %>% 
+epa_pm25_sites_sf <- read_csv('C:/Users/Alina/Desktop/DUKE_22FALL/872/EDA-Fall2022/Data/Raw/EPAair_PM25_NC2018_raw.csv') %>% 
   group_by(`Site Name`, COUNTY, SITE_LATITUDE, SITE_LONGITUDE) %>% 
   summarize(
     meanPM = mean(`Daily Mean PM2.5 Concentration`,na.rm=T),
@@ -90,7 +90,7 @@ Below we read in the USA counties shapefile, filtering for just the NC features 
 
 ```{r read.filtered.records.from.shapefile.to.sf.object}
 #
-counties_sf<- st_read('./Data/Spatial/cb_2018_us_county_20m.shp') %>% 
+counties_sf<- st_read('C:/Users/Alina/Desktop/DUKE_22FALL/872/EDA-Fall2022/Data/Spatial/cb_2018_us_county_20m.shp') %>% 
   filter(STATEFP == 37) #Filter for just NC Counties
 
 #
@@ -100,7 +100,7 @@ colnames(counties_sf)
 st_crs(counties_sf) 
 
 
-#
+#number of rows
 nrow(counties_sf)
 
 #Reveal the extent of this dataset via the st_bbox() function
@@ -120,19 +120,19 @@ mapView(counties_sf, zcol = "AWATER")
 ```{r read HUCs shapefile}
 #Read the shapefile into an sf dataframe named "huc8_sf"
 
-
+huc8_sf<-st_read('C:/Users/Alina/Desktop/DUKE_22FALL/872/EDA-Fall2022/Data/Spatial/NCHUC8.shp')
 #Reveal the columns
 
-
+colnames(huc8_sf)
 #Check the CRS
 
-
+st_crs(huc8_sf)
 #Examine some records
 head(huc8_sf)
 
 #View the data as a map, colored by the acreage in each
 
-
+mapview(huc8_sf)
 
 
 ```
@@ -143,12 +143,13 @@ head(huc8_sf)
 
 ```{r Select the Upper Neuse HUC 8}
 #Read the shapefile into an sf dataframe
-
-
+upperNeuse_sf<-st_read('C:/Users/Alina/Desktop/DUKE_22FALL/872/EDA-Fall2022/Data/Spatial/NCHUC8.shp')%>%
+  filter(SUBBASIN=='Upper Neuse')
 
 #Create a map
 
-
+mapview(huc8_sf,col.regions='orange')+
+  mapview(upperNeuse_sf,col.regions='purple')
 
 
 ```
@@ -193,6 +194,20 @@ ggplot(nc_powerplants_sf) +
   geom_sf(aes(color = PRIM_FUEL)) 
 
 ```
+```{r}
+edu_sf <- st_read('https://services1.arcgis.com/Hp6G80Pky0om7QvQ/arcgis/rest/services/Colleges_and_Universities/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson')
+#Reveal the field names
+colnames(edu_sf)
+
+#How many records
+nrow(edu_sf)
+#Filter for just powerplants found in NC
+nc_edu_sf <- edu_sf %>% 
+  filter(STATE == "NC") 
+#View on a map - specify the geometry column to draw faster
+mapview(edu_sf)
+
+```
 
 # 3. WORKING WITH SPATIAL DATA
 
@@ -212,7 +227,7 @@ We'll focus on just a few variables: Estimates of people in poverty ("E_POV") an
 #Read the 2018 SVI county-level dataset for NC
 svi2018_nc_raw <- read.csv(
   'https://svi.cdc.gov/Documents/Data/2018_SVI_Data/CSV/States_Counties/NorthCarolina_COUNTY.csv',
-  colClasses = c('FIPS' = 'factor')) %>% 
+  colClasses = c('FIPS' = 'factor')) %>% #can't use stringasfactor, so this change FIPS to factor
   select(COUNTY, FIPS, LOCATION, E_TOTPOP, E_POV, E_MINRTY)
 
 #Check structure
@@ -246,25 +261,15 @@ ggplot() +
 
 ```{r}
 #Compute HUC8 wind energy
+wind_energy_sf<-read.csv('https://raw.githubusercontent.com/ENV859/EnviroAtlasData/main/Wind_Energy.csv',colClasses = c('HUC_12' = 'factor'))%>%
+  mutate(HUC_8=substr(HUC_12,1,8))%>%#create a column with HUC8
+  group_by(HUC_8)%>%
+  summarize(kWhkm2day=sum(kWhkm2day))
 
-
-
-
-
-  
 #Join to HUC_8 features
-
-
-
-
-
+huc8_sf_wind<-huc8_sf%>%left_join(wind_energy_sf,by=c('HUC_8','HUC_8'))
 #View the outputs
-
-
-
-
-
-
+mapview(huc8_sf_wind,zol='zKhkm2day')
 
 ```
 
